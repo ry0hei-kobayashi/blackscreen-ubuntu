@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=BlackSceenApp
+Comment=A simple application that cover the screen with a black overlay
+Exec=blackscreen
+Terminal=false
+Type=Application
+Categories=Utility;
