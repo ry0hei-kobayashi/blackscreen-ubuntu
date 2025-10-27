@@ -6,6 +6,7 @@ from gi.repository import Gtk, Gdk
 class BlackCover(Gtk.Window):
     def __init__(self, monitor):
         super().__init__()
+
         self.set_decorated(False)
         self.set_app_paintable(True)
         self.set_skip_taskbar_hint(True)
@@ -17,14 +18,18 @@ class BlackCover(Gtk.Window):
         self.fullscreen()
 
         geo = monitor.get_geometry()
+
         self.move(geo.x, geo.y)
         self.set_default_size(geo.width, geo.height)
         self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 1))
 
         # Hide the cursor when the window is realized
         self.connect("realize", self.hide_cursor)
+
+        # Event to uncover the screen
         self.connect("button-press-event", lambda *_: Gtk.main_quit())
         self.connect("key-press-event", lambda w, e: Gtk.main_quit() if e.keyval == Gdk.KEY_Escape else None)
+
         self.show_all()
 
     def hide_cursor(self, widget):
@@ -38,6 +43,7 @@ def main():
     display = Gdk.Display.get_default()
     for i in range(display.get_n_monitors()):
         monitor = display.get_monitor(i)
+        # print(monitor)
         BlackCover(monitor)
     Gtk.main()
 
